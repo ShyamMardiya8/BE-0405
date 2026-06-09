@@ -1,8 +1,10 @@
 const express = require("express");
-const jwt = require("jsonwebtoken");
 const { authController } = require("../../Controllers/Auth.controller");
+const { requestValidators } = require("../../Middleware/requestValidators.middleware.js");
 
-const app = express.Router();
+const auth = express.Router();
 
-app.get("/register", authController.register);
-app.get("/login", authController.login);
+auth.post("/register", requestValidators.auth, authController.register);
+auth.post("/login", authController.login);
+
+module.exports = auth

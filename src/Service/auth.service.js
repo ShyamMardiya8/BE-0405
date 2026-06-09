@@ -1,31 +1,41 @@
 const { authRepo } = require("../Repo/auth.repo");
+const jwt = require("jsonwebtoken");
+const bct = require("bcrypt")
 
 const authService = {
-  register: async (email, password) => {
+  register: async (userBodyData) => {
     try {
-      const user = await authRepo.createUser(email, password);
+      const saltedPassword = 10;
+      const hashedPassword = await bct.hash(String(userBodyData.password), saltedPassword)
+      delete userBodyData.password
+      const userBodyObj = {
+        ...userBodyData,
+        password: hashedPassword
+      }
+      const user = await authRepo.createUser(userBodyObj);
       return user;
     } catch (error) {
       console.error(error);
-      throw new Error("Error registering user");
+      throw new Error(error);
     }
   },
-  login: async (email, password) => {
+  login: async (email, password, saltedPassword) => {
     try {
+      const isMatch = await bct.compare(String(password), String(saltedPassword))
       const user = await authRepo.findUserByEmailAndPassword(email, password);
       if (!user) {
         throw new Error("Invalid email or password");
       }
+      const secretToken = process.env.SECRET
       const token = await jwt.sign(
-        { email, password },
-        process.env.JWT_SECRET,
+        { email, password },secretToken,
         {
           expiresIn: "1h",
         },
       );
       const refreshToken = await jwt.sign(
         { email, password },
-        process.env.JWT_SECRET,
+        secretToken,
         {
           expiresIn: "10d",
         },
@@ -37,7 +47,7 @@ const authService = {
       };
     } catch (error) {
       console.error(error, "authService.login");
-      throw new Error("Error logging in user");
+      throw new Error(error,"Error logging in user");
     }
   },
 };

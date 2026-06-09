@@ -4,15 +4,16 @@ const ResponseHandler = require("../utility/ResponseHandler");
 
 const authController = {
   register: asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
-    const user = await authService.register(email, password);
+    const userBodyData = req.body;
+    const user = await authService.register(userBodyData);
     return res
       .status(201)
       .json(new ResponseHandler("User register successfully", 200, user, true));
   }),
   login: asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    const user = await authService.login(email, password);
+    const saltedPassword = req.body.password
+    const user = await authService.login(email, password, saltedPassword);
     const response = {
       user: user.user,
       token: user.token,

@@ -1,13 +1,13 @@
 const { Staff } = require("../Models/staff.model");
 
 const authRepo = {
-  createUser: async (email, password) => {
+  createUser: async (userBodyData) => {
     try {
-      const user = await Staff.create({ email, password });
+      const user = await Staff.create(userBodyData);
       return user;
     } catch (error) {
       console.error(error);
-      throw new Error("Error creating user");
+      throw new Error(error);
     }
   },
   findUserByEmailAndPassword: async (email, password) => {
@@ -16,7 +16,7 @@ const authRepo = {
       return user;
     } catch (error) {
       console.error(error);
-      throw new Error("Error finding user");
+      throw new Error(error);
     }
   },
 };
