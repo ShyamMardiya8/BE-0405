@@ -1,7 +1,7 @@
 const express = require('express');
 const { requestValidators } = require('../../Middleware/requestValidators.middleware');
 const { staffController } = require('../../Controllers/staff.controller');
-const endpoints = require('../../constant');
+const {endpoints} = require('../../constant');
 const auth = require('../../Middleware/auth.middleware');
 
 const staff = express.Router();

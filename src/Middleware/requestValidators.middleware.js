@@ -1,5 +1,5 @@
 const { Schema } = require("zod");
-const { staffValidatorSchema, clientValidationSchema, authValidation } = require("../utility/Validators");
+const { staffValidatorSchema, clientValidationSchema, authValidation, formBuilderValidation } = require("../utility/Validators");
 
 const requestValidators = {
   auth: (req, res, next) => {
@@ -53,6 +53,23 @@ const requestValidators = {
     req.body = validation.data;
     next();
   },
+  form: (req, res, next) => {
+    const validation = formBuilderValidation.safeParse(req.body)
+
+    if (!validation.success) {
+      const errors = JSON.parse(validation.error.message);
+      const response = errors.map((err) => ({
+        field: err.path.join("."),
+         message: err.message,
+      }))
+      const error = new Error("validation error")
+      error.statusCode = 400;
+      error.errors = errors;
+      throw error
+    }
+    req.body = validation.data;
+    next();
+  }
 };
 
 module.exports = { requestValidators };

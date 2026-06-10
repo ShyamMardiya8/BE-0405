@@ -1,4 +1,5 @@
 const { staffRepo } = require("../Repo/staff.repo");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 
 const staffService = {
   addEmployee: async (employeeData) => {
@@ -7,7 +8,7 @@ const staffService = {
       return employee;
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   readEmployee: async () => {
@@ -16,7 +17,7 @@ const staffService = {
       return employeesData
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
    updateEmployee: async (employeeId, employeeBodyData) => {
@@ -25,7 +26,7 @@ const staffService = {
       return employeesData
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   deleteEmployee: async (employeeId) => {
@@ -34,7 +35,7 @@ const staffService = {
       return employeesData
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   }
 };

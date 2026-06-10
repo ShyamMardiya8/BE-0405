@@ -16,7 +16,7 @@ const clientController = {
         return res.status(200).json(response)
     }),
     updateClient: asyncHandler(async (req, res) => {
-        const clientId = req.params.id;
+        const clientId = req.query.id;
         const clientBody = req.body;
         const fetchedClientData = await clientService.updateClient(clientId, clientBody);
         const response = new ResponseHandler("Updated Successfully", 200, fetchedClientData, true)
@@ -24,7 +24,7 @@ const clientController = {
         return res.status(200).json(response)
     }),
     deleteClient: asyncHandler(async (req, res) => {
-        const clientId = req.params.id
+        const clientId = req.query.id
         const fetchedClientData = await clientService.deleteClient(clientId);
         const response = new ResponseHandler("Deleted Successfully",200,fetchedClientData, true )
 

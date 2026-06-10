@@ -1,5 +1,5 @@
 const express = require('express');
-const endpoints = require('../../constant');
+const {endpoints} = require('../../constant');
 const { requestValidators } = require('../../Middleware/requestValidators.middleware');
 const {clientController} = require("../../Controllers/Client.controller")
 

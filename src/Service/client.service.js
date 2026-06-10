@@ -1,4 +1,5 @@
 const  clientRepo  = require("../Repo/client.repo");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 
 const clientService = {
   readClient: async (params) => {
@@ -7,7 +8,7 @@ const clientService = {
       return fetchedFromDB;
     } catch (error) {
       console.error(error, "Error while reading client");
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   createClient: async (clientBody) => {
@@ -16,7 +17,7 @@ const clientService = {
       return createClientFromDB
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   updateClient: async (clientId, clientBody) => {
@@ -28,7 +29,7 @@ const clientService = {
       return createClientFromDB;
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   deleteClient: async (clientId) => {
@@ -36,8 +37,8 @@ const clientService = {
         const deleteClientFromDB = await clientRepo.deleteClient(clientId);
         return deleteClientFromDB
     } catch (error) {
-        console.error(error);
-        throw new Error(error);
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
 };

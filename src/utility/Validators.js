@@ -81,7 +81,7 @@ const authValidation = z.object({
   role: z.enum(["Super Admin", "Admin", "Employee"], {
     errorMap: () => ({
       required_error: "Please select a valid user role",
-      invalid_type_error: "Role must be a Number",
+      invalid_type_error: "Role must be a String",
     }),
   }),
 
@@ -89,8 +89,34 @@ const authValidation = z.object({
     message: "Invalid Tasks",
   }),
 });
+
+const formBuilderValidation = z.object({
+  staffId: z.string({
+      required_error: "StaffId is required",
+      invalid_type_error: "StaffId must be a String",
+  }),
+  title: z.string({
+      required_error: "title is required",
+      invalid_type_error: "title must be a String",
+  }),
+  fields: z.array(
+    z.object({
+    label: z.string({
+      required_error: "label is required",
+      invalid_type_error: "label must be a String",
+    }),
+    fieldType: z.enum(["text", "number", "email", "checkbox", "radio", "file", "date"], {
+      errorMap: () => ({
+      required_error: "Please select a valid field type",
+      invalid_type_error: "fieldType must be a String",
+      })
+    })
+  })
+  )
+})
 module.exports = {
   staffValidatorSchema,
   clientValidationSchema,
   authValidation,
+  formBuilderValidation
 };

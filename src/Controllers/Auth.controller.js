@@ -12,8 +12,7 @@ const authController = {
   }),
   login: asyncHandler(async (req, res) => {
     const { email, password } = req.body;
-    const saltedPassword = req.body.password
-    const user = await authService.login(email, password, saltedPassword);
+    const user = await authService.login(email, password);
     const response = {
       user: user.user,
       token: user.token,

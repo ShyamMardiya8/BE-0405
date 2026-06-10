@@ -21,7 +21,7 @@ const staffController = {
   }),
 
   updateEmployee: asyncHandler(async (req, res) => {
-    const employeeId = req.params.id;
+    const employeeId = req.query.id;
     const employeeDataBody = req.body;
     const updatedExistingEmployee = await staffService.updateEmployee(
       employeeId,
@@ -39,7 +39,7 @@ const staffController = {
   }),
 
   deleteEmployee: asyncHandler(async (req, res) => {
-    const employeeId = req.params.id;
+    const employeeId = req.query.id;
     const updatedExistingEmployee = await staffService.deleteEmployee(
       employeeId,
     );

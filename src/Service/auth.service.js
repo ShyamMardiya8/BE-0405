@@ -1,6 +1,7 @@
 const { authRepo } = require("../Repo/auth.repo");
 const jwt = require("jsonwebtoken");
-const bct = require("bcrypt")
+const bct = require("bcrypt");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 
 const authService = {
   register: async (userBodyData) => {
@@ -16,15 +17,14 @@ const authService = {
       return user;
     } catch (error) {
       console.error(error);
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
-  login: async (email, password, saltedPassword) => {
+  login: async (email, password) => {
     try {
-      const isMatch = await bct.compare(String(password), String(saltedPassword))
       const user = await authRepo.findUserByEmailAndPassword(email, password);
       if (!user) {
-        throw new Error("Invalid email or password");
+        throw new ApiErrorHandler("Invalid email or password", 404)
       }
       const secretToken = process.env.SECRET
       const token = await jwt.sign(
@@ -47,7 +47,7 @@ const authService = {
       };
     } catch (error) {
       console.error(error, "authService.login");
-      throw new Error(error,"Error logging in user");
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
 };

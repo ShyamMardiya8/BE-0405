@@ -1,40 +1,54 @@
+const { errMessage } = require("../constant");
 const { Staff } = require("../Models/staff.model");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 
 const staffRepo = {
   createEmployee: async (employeeData) => {
     try {
       const employee = await Staff.create(employeeData);
+      if (!employee) {
+        throw new ApiErrorHandler(errMessage.create, 500)
+      }
       return employee;
     } catch (error) {
       console.error(error, "staffRepo.createEmployee");
-      throw new Error(error);
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   readEmployee: async () => {
     try {
       const readEmployee = await Staff.find({}).select("-password");
+      if (!readEmployee) {
+        throw new ApiErrorHandler(errMessage.get, 404)
+      }
       return readEmployee;
     } catch (error) {
       console.error(error, 'staffRepo.readEmployee')
-      throw new Error("Error reading employee");
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   updateEmployee: async (id, body) => {
     try {
-      const updateEmployee = await Staff.updateOne(id, body)
+      const updateEmployee = await Staff.findByIdAndUpdate(id, body)
+      if (!updateEmployee) {
+        throw new ApiErrorHandler(errMessage.update, 500)
+      }
       return updateEmployee
     } catch (error) {
       console.error(error, "staffRepo.updateEmployee");
-      throw new Error("Error reading employee");
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
   deleteEmployee: async (id, body) => {
     try {
-      const updateEmployee = await Staff.deleteOne(id)
+      const updateEmployee = await Staff.findByIdAndDelete(id)
+      if (!updateEmployee) {
+        throw new ApiErrorHandler(errMessage.delete, 500)
+      }
       return updateEmployee
     } catch (error) {
       console.error(error, "staffRepo.updateEmployee");
-      throw new Error("Error reading employee");
+      throw new ApiErrorHandler(error.message, 500)
     }
   },
 };

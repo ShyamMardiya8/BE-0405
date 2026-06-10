@@ -1,35 +1,39 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { Staff } = require("../Models/staff.model");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 dotenv.config();
 
 const auth = async (req, res, next) => {
   try {
-    const token = req.headers["authorization"].split(" ")[1];
+    const header = req.headers["authorization"]
+    if (!header) {
+      throw new ApiErrorHandler('Authorization header is missing', 401)
+    }
+    const token = header.split(" ")[1];
     const secret = process.env.SECRET;
     if (!token) {
       console.error();
-      throw new Error("Token is missing");
+      throw new ApiErrorHandler("Token is missing", 401);
     }
 
-    const decodedPassword = jwt.verify(token, secret);
-    if (!decodedPassword) {
-      throw new Error("token expired");
+    const decodedToken = jwt.verify(token, secret);
+    if (!decodedToken) {
+      throw new ApiErrorHandler("token expired", 403);
     }
     const creds = {
-      email: decodedPassword.email,
-      password: decodedPassword.password,
+      email: decodedToken.email,
     };
 
     const findUser = await Staff.findOne(creds);
     if (!findUser) {
-      throw new Error("user does not exist");
+      throw new ApiErrorHandler("user does not exist", 404);
     }
 
     req.user = findUser;
     next();
   } catch (error) {
-    throw new Error(error);
+    throw new ApiErrorHandler(error.message, 500);
   }
 };
 

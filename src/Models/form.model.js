@@ -13,8 +13,9 @@ const formSchema = new mongoose.Schema({
     fields: [{
         label: String,
         fieldType: String,
-        required: true
     }]
 })
 
 const Form = mongoose.model('Form', formSchema)
+
+module.exports = Form

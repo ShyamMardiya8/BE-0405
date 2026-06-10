@@ -1,43 +1,62 @@
-const  Client  = require("../Models/client.model")
+const { errMessage } = require("../constant");
+const Client = require("../Models/client.model");
+const ApiErrorHandler = require("../utility/ApiErrorHandler");
 
 const clientRepo = {
-    readClient: async () => {
-        try {
-            const readClient = await Client.find({});
-            return readClient
-        } catch (error) {
-            console.error(error)
-            throw new Error(error)
-        }
-    },
-    addClient: async (clientData) => {
-        try {
-            debugger
-            const readClient = await Client.create(clientData);
-            return readClient
-        } catch (error) {
-            console.error(error)
-            throw new Error(error)
-        }
-    },
-    updateClient: async (clientId, clientData) => {
-        try {
-            const updateClient = await Client.updateOne(clientId, clientData);
-            return updateClient
-        } catch (error) {
-            console.error(error)
-            throw new Error(error)
-        }
-    },
-    deleteClient: async (clientId) => {
-        try {
-            const deleteClient = await Client.deleteOne(clientId);
-            return deleteClient
-        } catch (error) {
-            console.error(error)
-            throw new Error(error)
-        }
+  readClient: async () => {
+    try {
+      const readClient = await Client.find({});
+      if (!readClient) {
+        throw new ApiErrorHandler(errMessage.get, 404);
+      }
+      return readClient;
+    } catch (error) {
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500);
     }
-}
+  },
+  addClient: async (clientData) => {
+    try {
+      const addClient = await Client.create(clientData);
+      if (!addClient) {
+        throw new ApiErrorHandler(
+          errMessage.create,
+          500,
+        );
+      }
+      return addClient;
+    } catch (error) {
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500);
+    }
+  },
+  updateClient: async (clientId, clientData) => {
+    try {
+      const updateClient = await Client.findByIdAndUpdate(clientId, clientData);
+      if (!updateClient) {
+        throw new ApiErrorHandler(
+          errMessage.update,
+          500,
+        );
+      }
+      return updateClient;
+    } catch (error) {
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500);
+    }
+  },
+  deleteClient: async (clientId) => {
+    try {
+      const deleteClient = await Client.findByIdAndDelete(clientId);
+      if (!deleteClient) {
+        throw new ApiErrorHandler(errMessage.delete, 404);
+      }
+      return deleteClient;
+    } catch (error) {
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500);
+    }
+  },
+};
 
-module.exports = clientRepo 
+module.exports = clientRepo;
