@@ -1,8 +1,8 @@
-const { errMessage } = require("../constant");
-const Client = require("../Models/client.model");
-const ApiErrorHandler = require("../utility/ApiErrorHandler");
+import { errMessage } from "../constant";
+import Client from "../Models/client.model";
+import ApiErrorHandler from "../utility/ApiErrorHandler";
 
-const clientRepo = {
+export const clientRepo = {
   readClient: async () => {
     try {
       const readClient = await Client.find({});
@@ -59,4 +59,4 @@ const clientRepo = {
   },
 };
 
-module.exports = clientRepo;
+export default clientRepo;

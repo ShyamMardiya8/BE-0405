@@ -1,16 +1,16 @@
-const mongoose = require("mongoose");
-const dotenv = require("dotenv");
-dotenv.config()
-const DBURI = process.env.MONOGO_URI
+import mongoose from "mongoose";
 
-const dbConnections = async () => {
-    try {
-        const data = await mongoose.connect(DBURI)
-        console.log("======================> Database connected successfully", data.connection.name);
-        return data.connection
-    } catch (error) {
-        console.error(error, "===>db/index.js")
-    }
-}
+const DBURI = process.env.MONOGO_URI;
 
-module.exports = {dbConnections}
+export const dbConnections = async () => {
+  if (mongoose.connections[0].readyState) {
+    return mongoose.connections[0];
+  }
+  try {
+    const data = await mongoose.connect(DBURI);
+    console.log("======================> Database connected successfully", data.connection.name);
+    return data.connection;
+  } catch (error) {
+    console.error(error, "===>db/index.js");
+  }
+};

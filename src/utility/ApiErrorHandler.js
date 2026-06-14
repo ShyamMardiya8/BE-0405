@@ -13,4 +13,4 @@ class ApiErrorHandler extends Error {
   }
 }
 
-module.exports = ApiErrorHandler
+export default ApiErrorHandler;

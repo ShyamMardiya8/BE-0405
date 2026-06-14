@@ -1,34 +1,34 @@
-const { authRepo } = require("../Repo/auth.repo");
-const jwt = require("jsonwebtoken");
-const bct = require("bcrypt");
-const ApiErrorHandler = require("../utility/ApiErrorHandler");
+import { authRepo } from "../Repo/auth.repo";
+import jwt from "jsonwebtoken";
+import bct from "bcrypt";
+import ApiErrorHandler from "../utility/ApiErrorHandler";
 
-const authService = {
+export const authService = {
   register: async (userBodyData) => {
     try {
       const saltedPassword = 10;
-      const hashedPassword = await bct.hash(String(userBodyData.password), saltedPassword)
-      delete userBodyData.password
+      const hashedPassword = await bct.hash(String(userBodyData.password), saltedPassword);
+      delete userBodyData.password;
       const userBodyObj = {
         ...userBodyData,
         password: hashedPassword
-      }
+      };
       const user = await authRepo.createUser(userBodyObj);
       return user;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   login: async (email, password) => {
     try {
       const user = await authRepo.findUserByEmailAndPassword(email, password);
       if (!user) {
-        throw new ApiErrorHandler("Invalid email or password", 404)
+        throw new ApiErrorHandler("Invalid email or password", 404);
       }
-      const secretToken = process.env.SECRET
+      const secretToken = process.env.SECRET;
       const token = await jwt.sign(
-        { email, password },secretToken,
+        { email, password }, secretToken,
         {
           expiresIn: "1h",
         },
@@ -51,5 +51,3 @@ const authService = {
     }
   },
 };
-
-module.exports = { authService };

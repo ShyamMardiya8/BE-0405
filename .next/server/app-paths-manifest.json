@@ -1,0 +1,20 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/page": "app/page.js",
+  "/api/client/create/route": "app/api/client/create/route.js",
+  "/api/auth/register/route": "app/api/auth/register/route.js",
+  "/api/client/delete/route": "app/api/client/delete/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/client/read/route": "app/api/client/read/route.js",
+  "/api/form/create/route": "app/api/form/create/route.js",
+  "/api/form/delete/route": "app/api/form/delete/route.js",
+  "/api/client/update/route": "app/api/client/update/route.js",
+  "/api/form/update/route": "app/api/form/update/route.js",
+  "/api/staff/delete/route": "app/api/staff/delete/route.js",
+  "/api/form/read/route": "app/api/form/read/route.js",
+  "/api/staff/read/route": "app/api/staff/read/route.js",
+  "/api/staff/update/route": "app/api/staff/update/route.js",
+  "/api/view/create/route": "app/api/view/create/route.js",
+  "/api/view/read/route": "app/api/view/read/route.js",
+  "/api/staff/create/route": "app/api/staff/create/route.js"
+}

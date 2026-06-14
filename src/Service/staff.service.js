@@ -1,43 +1,41 @@
-const { staffRepo } = require("../Repo/staff.repo");
-const ApiErrorHandler = require("../utility/ApiErrorHandler");
+import { staffRepo } from "../Repo/staff.repo";
+import ApiErrorHandler from "../utility/ApiErrorHandler";
 
-const staffService = {
+export const staffService = {
   addEmployee: async (employeeData) => {
     try {
       const employee = await staffRepo.createEmployee(employeeData);
       return employee;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   readEmployee: async () => {
     try {
       const employeesData = await staffRepo.readEmployee();
-      return employeesData
+      return employeesData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
-   updateEmployee: async (employeeId, employeeBodyData) => {
+  updateEmployee: async (employeeId, employeeBodyData) => {
     try {
       const employeesData = await staffRepo.updateEmployee(employeeId, employeeBodyData);
-      return employeesData
+      return employeesData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   deleteEmployee: async (employeeId) => {
     try {
       const employeesData = await staffRepo.deleteEmployee(employeeId);
-      return employeesData
+      return employeesData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   }
 };
-
-module.exports = { staffService };

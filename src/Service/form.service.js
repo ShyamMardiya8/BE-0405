@@ -1,43 +1,43 @@
-const formRepo = require("../Repo/form.repo");
-const ApiErrorHandler = require("../utility/ApiErrorHandler");
+import formRepo from "../Repo/form.repo";
+import ApiErrorHandler from "../utility/ApiErrorHandler";
 
-const formService = {
+export const formService = {
   createForm: async (formBody) => {
     try {
       const fetchCreatedForm = await formRepo.createForm(formBody);
       return fetchCreatedForm;
     } catch (error) {
       console.error(error, 'formService.createForm');
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   readForm: async (params) => {
     try {
       const fetchFormData = await formRepo.readForm();
-      return fetchFormData
+      return fetchFormData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   updateForm: async (formId, formBody) => {
     try {
       const fetchUpdatedFormData = await formRepo.updateForm(formId, formBody);
-      return fetchUpdatedFormData
+      return fetchUpdatedFormData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
   deleteForm: async (formId) => {
     try {
       const fetchUpdatedFormData = await formRepo.deleteForm(formId);
-      return fetchUpdatedFormData
+      return fetchUpdatedFormData;
     } catch (error) {
       console.error(error);
-      throw new ApiErrorHandler(error.message, 500)
+      throw new ApiErrorHandler(error.message, 500);
     }
   },
 };
 
-module.exports = formService;
+export default formService;

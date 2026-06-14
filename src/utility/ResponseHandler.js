@@ -3,8 +3,8 @@ class ResponseHandler {
         this.message = message;
         this.status = status;
         this.data = data;
-        this.success = success
+        this.success = success;
     }
 }
 
-module.exports =  ResponseHandler
+export default ResponseHandler;

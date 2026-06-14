@@ -1,6 +1,7 @@
-const z = require("zod");
+import z from "zod";
+import ApiErrorHandler from "./ApiErrorHandler";
 
-const staffValidatorSchema = z.object({
+export const staffValidatorSchema = z.object({
   name: z.string({
     required_error: "Name is required",
     invalid_type_error: "Name must be a string",
@@ -33,7 +34,7 @@ const staffValidatorSchema = z.object({
   }),
 });
 
-const clientValidationSchema = z.object({
+export const clientValidationSchema = z.object({
   name: z
     .string({
       required_error: "Name is required",
@@ -57,7 +58,7 @@ const clientValidationSchema = z.object({
   }),
 });
 
-const authValidation = z.object({
+export const authValidation = z.object({
   name: z.string({
     required_error: "Name is required",
     invalid_type_error: "Name must be a string",
@@ -90,7 +91,7 @@ const authValidation = z.object({
   }),
 });
 
-const formBuilderValidation = z.object({
+export const formBuilderValidation = z.object({
   staffId: z.string({
       required_error: "StaffId is required",
       invalid_type_error: "StaffId must be a String",
@@ -113,10 +114,15 @@ const formBuilderValidation = z.object({
     })
   })
   )
-})
-module.exports = {
-  staffValidatorSchema,
-  clientValidationSchema,
-  authValidation,
-  formBuilderValidation
-};
+});
+
+export function validateBody(body, schema) {
+  const validation = schema.safeParse(body);
+  if (!validation.success) {
+    const errors = JSON.parse(validation.error.message);
+    const error = new ApiErrorHandler("validation error", 400);
+    error.errors = errors;
+    throw error;
+  }
+  return validation.data;
+}
