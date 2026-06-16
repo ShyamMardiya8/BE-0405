@@ -7,7 +7,7 @@ export const auth = async (req) => {
   await dbConnections();
   const header = req.headers.get("authorization");
   if (!header) {
-    throw new ApiErrorHandler('Authorization header is missing', 401);
+    throw new ApiErrorHandler("Authorization header is missing", 401);
   }
   const token = header.split(" ")[1];
   const secret = process.env.SECRET;
