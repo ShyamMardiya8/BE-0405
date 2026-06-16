@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { dbConnections } from "@/src/db";
+import { dbConnections } from "@/app/src/db";
 import ApiErrorHandler from "./ApiErrorHandler";
 
 export function wrapHandler(handler) {
@@ -16,7 +16,7 @@ export function wrapHandler(handler) {
           message: err.message || "Something went wrong",
           errors: err.errors || [],
         },
-        { status: statusCode }
+        { status: statusCode },
       );
     }
   };

@@ -19,7 +19,7 @@ export const formRepo = {
     try {
       const fetchedFormDataFromDB = await Form.find({});
       if (!fetchedFormDataFromDB) {
-         throw new ApiErrorHandler(errMessage.read, 404);
+        throw new ApiErrorHandler(errMessage.read, 404);
       }
       return fetchedFormDataFromDB;
     } catch (error) {
@@ -29,9 +29,12 @@ export const formRepo = {
   },
   updateForm: async (formId, formBody) => {
     try {
-      const fetchedFormDataFromDB = await Form.findByIdAndUpdate(formId, formBody);
+      const fetchedFormDataFromDB = await Form.findByIdAndUpdate(
+        formId,
+        formBody,
+      );
       if (!fetchedFormDataFromDB) {
-         throw new ApiErrorHandler(errMessage.update, 404);
+        throw new ApiErrorHandler(errMessage.update, 404);
       }
       return fetchedFormDataFromDB;
     } catch (error) {

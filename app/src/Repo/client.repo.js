@@ -19,10 +19,7 @@ export const clientRepo = {
     try {
       const addClient = await Client.create(clientData);
       if (!addClient) {
-        throw new ApiErrorHandler(
-          errMessage.create,
-          500,
-        );
+        throw new ApiErrorHandler(errMessage.create, 500);
       }
       return addClient;
     } catch (error) {
@@ -34,10 +31,7 @@ export const clientRepo = {
     try {
       const updateClient = await Client.findByIdAndUpdate(clientId, clientData);
       if (!updateClient) {
-        throw new ApiErrorHandler(
-          errMessage.update,
-          500,
-        );
+        throw new ApiErrorHandler(errMessage.update, 500);
       }
       return updateClient;
     } catch (error) {

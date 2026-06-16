@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
-import { wrapHandler } from "@/src/utility/wrapHandler";
-import formService from "@/src/Service/form.service";
-import auth from "@/src/Middleware/auth";
-import ResponseHandler from "@/src/utility/ResponseHandler";
+import { wrapHandler } from "@/app/src/utility/wrapHandler";
+import formService from "@/app/src/Service/form.service";
+import auth from "@/app/src/Middleware/auth";
+import ResponseHandler from "@/app/src/utility/ResponseHandler";
 
 export const dynamic = "force-dynamic";
 

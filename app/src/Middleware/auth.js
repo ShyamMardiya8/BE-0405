@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { Staff } from "@/src/Models/staff.model";
-import ApiErrorHandler from "@/src/utility/ApiErrorHandler";
-import { dbConnections } from "@/src/db";
+import { Staff } from "@/app/src/Models/staff.model";
+import ApiErrorHandler from "@/app/src/utility/ApiErrorHandler";
+import { dbConnections } from "@/app/src/db";
 
 export const auth = async (req) => {
   await dbConnections();

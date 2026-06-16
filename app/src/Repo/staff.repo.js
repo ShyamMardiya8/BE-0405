@@ -23,7 +23,7 @@ export const staffRepo = {
       }
       return readEmployee;
     } catch (error) {
-      console.error(error, 'staffRepo.readEmployee');
+      console.error(error, "staffRepo.readEmployee");
       throw new ApiErrorHandler(error.message, 500);
     }
   },

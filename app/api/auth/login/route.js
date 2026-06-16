@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { wrapHandler } from "@/src/utility/wrapHandler";
-import { authService } from "@/src/Service/auth.service";
-import ResponseHandler from "@/src/utility/ResponseHandler";
+import { wrapHandler } from "@/app/src/utility/wrapHandler";
+import { authService } from "@/app/src/Service/auth.service";
+import ResponseHandler from "@/app/src/utility/ResponseHandler";
 
 export const POST = wrapHandler(async (req) => {
   const { email, password } = await req.json();
@@ -11,5 +11,8 @@ export const POST = wrapHandler(async (req) => {
     token: user.token,
     refreshToken: user.refreshToken,
   };
-  return NextResponse.json(new ResponseHandler("User login successfully", 200, response, true), { status: 200 });
+  return NextResponse.json(
+    new ResponseHandler("User login successfully", 200, response, true),
+    { status: 200 },
+  );
 });

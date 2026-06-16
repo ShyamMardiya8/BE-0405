@@ -22,7 +22,10 @@ export const authRepo = {
       if (!user) {
         throw new ApiErrorHandler(errMessage.get, 404);
       }
-      const isMatch = await bct.compare(String(password), String(user.password));
+      const isMatch = await bct.compare(
+        String(password),
+        String(user.password),
+      );
       if (!isMatch) {
         throw new ApiErrorHandler("user doesn't exist", 404);
       }

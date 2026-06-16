@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import { wrapHandler } from "@/src/utility/wrapHandler";
-import formService from "@/src/Service/form.service";
-import auth from "@/src/Middleware/auth";
-import { validateBody, formBuilderValidation } from "@/src/utility/Validators";
-import ResponseHandler from "@/src/utility/ResponseHandler";
+import { wrapHandler } from "@/app/src/utility/wrapHandler";
+import formService from "@/app/src/Service/form.service";
+import auth from "@/app/src/Middleware/auth";
+import {
+  validateBody,
+  formBuilderValidation,
+} from "@/app/src/utility/Validators";
+import ResponseHandler from "@/app/src/utility/ResponseHandler";
 
 export const PUT = wrapHandler(async (req) => {
   await auth(req);
@@ -12,5 +15,8 @@ export const PUT = wrapHandler(async (req) => {
   const body = await req.json();
   const validatedData = validateBody(body, formBuilderValidation);
   const updatedForm = await formService.updateForm(id, validatedData);
-  return NextResponse.json(new ResponseHandler("Form updated Successfully", 200, [], true), { status: 200 });
+  return NextResponse.json(
+    new ResponseHandler("Form updated Successfully", 200, [], true),
+    { status: 200 },
+  );
 });

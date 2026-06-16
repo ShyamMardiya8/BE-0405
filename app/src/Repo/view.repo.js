@@ -8,7 +8,7 @@ export const viewRepo = {
     try {
       const fetchFormFromDB = await Form.findById(id);
       if (!fetchFormFromDB) {
-         throw new ApiErrorHandler(errMessage.get, 404);
+        throw new ApiErrorHandler(errMessage.get, 404);
       }
       return fetchFormFromDB;
     } catch (error) {
@@ -27,7 +27,7 @@ export const viewRepo = {
       console.error(error, "viewRepo.submitForm");
       throw new ApiErrorHandler(error.message, 500);
     }
-  }
+  },
 };
 
 export default viewRepo;

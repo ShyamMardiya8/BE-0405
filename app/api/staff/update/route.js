@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import { wrapHandler } from "@/src/utility/wrapHandler";
-import { staffService } from "@/src/Service/staff.service";
-import auth from "@/src/Middleware/auth";
-import { validateBody, staffValidatorSchema } from "@/src/utility/Validators";
-import ResponseHandler from "@/src/utility/ResponseHandler";
+import { wrapHandler } from "@/app/src/utility/wrapHandler";
+import { staffService } from "@/app/src/Service/staff.service";
+import auth from "@/app/src/Middleware/auth";
+import {
+  validateBody,
+  staffValidatorSchema,
+} from "@/app/src/utility/Validators";
+import ResponseHandler from "@/app/src/utility/ResponseHandler";
 
 export const PUT = wrapHandler(async (req) => {
   await auth(req);
@@ -13,7 +16,15 @@ export const PUT = wrapHandler(async (req) => {
   const validatedData = validateBody(body, staffValidatorSchema);
   const updatedExistingEmployee = await staffService.updateEmployee(
     employeeId,
-    validatedData
+    validatedData,
   );
-  return NextResponse.json(new ResponseHandler("Updated Successfully", 200, updatedExistingEmployee, true), { status: 200 });
+  return NextResponse.json(
+    new ResponseHandler(
+      "Updated Successfully",
+      200,
+      updatedExistingEmployee,
+      true,
+    ),
+    { status: 200 },
+  );
 });
