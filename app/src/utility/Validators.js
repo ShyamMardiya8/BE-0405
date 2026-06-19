@@ -32,6 +32,22 @@ export const staffValidatorSchema = z.object({
   tasks: z.array(z.string(), {
     message: "Invalid Tasks",
   }),
+
+  location: z.array(
+    z.object({
+      date: z.string(),
+      timeline: z.array(
+        z.object({
+          time: z.string(),
+          activity: z.string(),
+          lat: z.number(),
+          lng: z.number(),
+          clientName: z.string().optional(),
+          duration: z.string().optional(),
+        })
+      ),
+    })
+  ).optional(),
 });
 
 export const clientValidationSchema = z.object({
@@ -89,6 +105,22 @@ export const authValidation = z.object({
   tasks: z.array(z.string(), {
     message: "Invalid Tasks",
   }),
+
+  location: z.array(
+    z.object({
+      date: z.string(),
+      timeline: z.array(
+        z.object({
+          time: z.string(),
+          activity: z.string(),
+          lat: z.number(),
+          lng: z.number(),
+          clientName: z.string().optional(),
+          duration: z.string().optional(),
+        })
+      ),
+    })
+  ).optional(),
 });
 
 export const formBuilderValidation = z.object({
@@ -114,6 +146,33 @@ export const formBuilderValidation = z.object({
     })
   })
   )
+});
+
+export const attendanceCreateSchema = z.object({
+  staffId: z.string({
+    required_error: "Staff ID is required",
+    invalid_type_error: "Staff ID must be a string",
+  }),
+  date: z.string({
+    required_error: "Date is required",
+  }),
+  status: z.enum(["Present", "Absent", "Late", "On Leave"]).optional(),
+  checkIn: z.object({
+    time: z.string({ required_error: "Check-in time is required" }),
+    lat: z.number({ required_error: "Check-in latitude is required" }),
+    lng: z.number({ required_error: "Check-in longitude is required" }),
+  }),
+  notes: z.string().optional(),
+});
+
+export const attendanceUpdateSchema = z.object({
+  status: z.enum(["Present", "Absent", "Late", "On Leave"]).optional(),
+  checkOut: z.object({
+    time: z.string({ required_error: "Check-out time is required" }),
+    lat: z.number({ required_error: "Check-out latitude is required" }),
+    lng: z.number({ required_error: "Check-out longitude is required" }),
+  }).optional(),
+  notes: z.string().optional(),
 });
 
 export function validateBody(body, schema) {

@@ -37,6 +37,40 @@ const staffSchema = new mongoose.Schema({
       },
     },
   ],
+  location: [
+    {
+      date: {
+        type: String,
+        required: true,
+      },
+      timeline: [
+        {
+          time: {
+            type: String,
+            required: true,
+          },
+          activity: {
+            type: String,
+            required: true,
+          },
+          lat: {
+            type: Number,
+            required: true,
+          },
+          lng: {
+            type: Number,
+            required: true,
+          },
+          clientName: {
+            type: String,
+          },
+          duration: {
+            type: String,
+          },
+        },
+      ],
+    },
+  ],
 });
 
 const Staff = mongoose.models.Staff || mongoose.model("Staff", staffSchema);
