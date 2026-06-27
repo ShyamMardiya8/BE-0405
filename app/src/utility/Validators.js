@@ -175,6 +175,58 @@ export const attendanceUpdateSchema = z.object({
   notes: z.string().optional(),
 });
 
+export const visitCreateSchema = z.object({
+  staffId: z.string().optional(),
+  clientId: z.string({
+    required_error: "Client ID is required",
+  }),
+  time: z.string({
+    required_error: "Time is required",
+  }),
+  subject: z.string({
+    required_error: "Subject is required",
+  }),
+  status: z.enum(["Pending", "Completed", "Canceled"]).optional(),
+});
+
+export const visitUpdateSchema = z.object({
+  staffId: z.string().optional(),
+  clientId: z.string().optional(),
+  time: z.string().optional(),
+  subject: z.string().optional(),
+  status: z.enum(["Pending", "Completed", "Canceled"]).optional(),
+});
+
+export const taskCreateSchema = z.object({
+  staffId: z.string().optional(),
+  clientId: z.string({
+    required_error: "Client ID is required",
+  }),
+  time: z.string({
+    required_error: "Time is required",
+  }),
+  subject: z.string({
+    required_error: "Subject is required",
+  }),
+  status: z.enum(["Pending", "Completed", "Canceled"]).optional(),
+  createdBy: z.string({
+    required_error: "Created By is required",
+  }),
+  type: z.string({
+    required_error: "Type is required",
+  }),
+});
+
+export const taskUpdateSchema = z.object({
+  staffId: z.string().optional(),
+  clientId: z.string().optional(),
+  time: z.string().optional(),
+  subject: z.string().optional(),
+  status: z.enum(["Pending", "Completed", "Canceled"]).optional(),
+  createdBy: z.string().optional(),
+  type: z.string().optional(),
+});
+
 export function validateBody(body, schema) {
   const validation = schema.safeParse(body);
   if (!validation.success) {
@@ -185,3 +237,4 @@ export function validateBody(body, schema) {
   }
   return validation.data;
 }
+

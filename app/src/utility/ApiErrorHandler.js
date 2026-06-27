@@ -1,5 +1,6 @@
 class ApiErrorHandler extends Error {
   constructor(message = "something went wrong", statusCode, stack = "") {
+    console.log(statusCode, "statusCode");
     super(message);
     this.message = message;
     this.statusCode = statusCode;
