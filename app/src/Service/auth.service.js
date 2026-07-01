@@ -28,13 +28,14 @@ export const authService = {
       }
       const secretToken = process.env.SECRET;
       const token = await jwt.sign(
-        { email, password }, secretToken,
+        { email, userId: user._id, companyId: user.companyId, role: user.role },
+        secretToken,
         {
           expiresIn: "1h",
         },
       );
       const refreshToken = await jwt.sign(
-        { email, password },
+        { email, userId: user._id, companyId: user.companyId, role: user.role },
         secretToken,
         {
           expiresIn: "10d",

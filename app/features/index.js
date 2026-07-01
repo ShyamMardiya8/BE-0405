@@ -156,6 +156,18 @@ const services = {
       }
     },
   ),
+  fetchStaffByEmail: createAsyncThunk(
+    "staff/fetchStaffByEmail",
+    async (_, { rejectWithValue }) => {
+      try {
+        // API endpoint as requested
+        const response = await apiFetch("/api/staff/readByemail");
+        return response; // ResponseHandler payload: { message, status, data, success }
+      } catch (error) {
+        return rejectWithValue(error.message || "Failed to fetch staff data");
+      }
+    },
+  ),
   fetchView: createAsyncThunk(
     "view/fetchView",
     async (formId, { rejectWithValue }) => {
@@ -177,7 +189,34 @@ const services = {
         });
         return response;
       } catch (error) {
-        return rejectWithValue(error.message || "Failed to submit form");
+        return rejectWithValue(
+          error.message || "Failed to submit form view",  
+        )
+      }
+    }
+  ),
+  onboardCompany: createAsyncThunk(
+    "company/onboardCompany",
+    async (onboardData, { rejectWithValue }) => {
+      try {
+        const response = await apiFetch("/api/company/onboard", {
+          method: "POST",
+          body: JSON.stringify(onboardData),
+        });
+        return response;
+      } catch (error) {
+        return rejectWithValue(error.message || "Company onboarding failed");
+      }
+    },
+  ),
+  fetchCompanyDetails: createAsyncThunk(
+    "company/fetchCompanyDetails",
+    async (_, { rejectWithValue }) => {
+      try {
+        const response = await apiFetch("/api/company/details");
+        return response; // ResponseHandler payload: { data: {...} }
+      } catch (error) {
+        return rejectWithValue(error.message || "Failed to fetch company details");
       }
     },
   ),

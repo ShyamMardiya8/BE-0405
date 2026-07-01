@@ -20,6 +20,16 @@ export const staffService = {
       throw new ApiErrorHandler(error.message, 500);
     }
   },
+   readEmployeeByEmail: async (email) => {
+    try {
+      const employeesData = await staffRepo.readEmployeeByEmail(email);
+      return employeesData;
+    } catch (error) {
+      console.error(error);
+      throw new ApiErrorHandler(error.message, 500);
+    }
+  },
+
   updateEmployee: async (employeeId, employeeBodyData) => {
     try {
       const employeesData = await staffRepo.updateEmployee(employeeId, employeeBodyData);

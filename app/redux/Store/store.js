@@ -5,6 +5,7 @@ import authReducer from "../Slices/authSlice";
 import clientReducer from "../Slices/clientSlice";
 import formReducer from "../Slices/formSlice";
 import viewReducer from "../Slices/viewSlice";
+import companyReducer from "../Slices/companySlice";
 
 const store = () => {
   return configureStore({
@@ -15,6 +16,7 @@ const store = () => {
       client: clientReducer,
       form: formReducer,
       view: viewReducer,
+      company: companyReducer,
     },
   });
 };

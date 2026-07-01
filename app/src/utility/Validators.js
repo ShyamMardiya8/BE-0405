@@ -75,9 +75,16 @@ export const clientValidationSchema = z.object({
 });
 
 export const authValidation = z.object({
-  name: z.string({
-    required_error: "Name is required",
-    invalid_type_error: "Name must be a string",
+  photo: z.string().optional(),
+
+  firstname: z.string({
+    required_error: "First name is required",
+    invalid_type_error: "First name must be a string",
+  }),
+
+  lastname: z.string({
+    required_error: "Last name is required",
+    invalid_type_error: "Last name must be a string",
   }),
 
   email: z.string().email({
@@ -87,12 +94,17 @@ export const authValidation = z.object({
 
   password: z.number({
     required_error: "Password is required",
-    invalid_type_error: "Password must be a string",
+    invalid_type_error: "Password must be a number",
   }),
 
-  phoneNumber: z.number({
-    required_error: "phoneNumber is required",
-    invalid_type_error: "Password must be a Number",
+  mobileNumber: z.number({
+    required_error: "Mobile number is required",
+    invalid_type_error: "Mobile number must be a number",
+  }),
+
+  additionalNumber: z.number({
+    required_error: "Additional number is required",
+    invalid_type_error: "Additional number must be a number",
   }),
 
   role: z.enum(["Super Admin", "Admin", "Employee"], {
@@ -100,6 +112,18 @@ export const authValidation = z.object({
       required_error: "Please select a valid user role",
       invalid_type_error: "Role must be a String",
     }),
+  }),
+
+  reportingHead: z.string().nullable().optional(),
+
+  locationTracking: z.boolean({
+    required_error: "Location tracking setting is required",
+    invalid_type_error: "Location tracking must be a boolean",
+  }),
+
+  active: z.boolean({
+    required_error: "Active status is required",
+    invalid_type_error: "Active status must be a boolean",
   }),
 
   tasks: z.array(z.string(), {
@@ -227,6 +251,22 @@ export const taskUpdateSchema = z.object({
   type: z.string().optional(),
 });
 
+export const companyOnboardValidation = z.object({
+  brandName: z.string({ required_error: "Brand name is required" }),
+  phoneNumber: z.number({ required_error: "Company phone number is required" }),
+  logo: z.string().optional(),
+  email: z.string().email({ required_error: "Company email is required" }),
+  website: z.string().optional(),
+  
+  adminPhoto: z.string().optional(),
+  adminFirstname: z.string({ required_error: "Admin first name is required" }),
+  adminLastname: z.string({ required_error: "Admin last name is required" }),
+  adminMobileNumber: z.number({ required_error: "Admin mobile number is required" }),
+  adminAdditionalNumber: z.number({ required_error: "Admin additional number is required" }),
+  adminEmail: z.string().email({ required_error: "Admin email is required" }),
+  adminPassword: z.number({ required_error: "Admin password is required" }),
+});
+
 export function validateBody(body, schema) {
   const validation = schema.safeParse(body);
   if (!validation.success) {
@@ -237,4 +277,5 @@ export function validateBody(body, schema) {
   }
   return validation.data;
 }
+
 

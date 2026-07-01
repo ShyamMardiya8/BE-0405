@@ -27,6 +27,19 @@ export const staffRepo = {
       throw new ApiErrorHandler(error.message, 500);
     }
   },
+  readEmployeeByEmail: async (emailId) => {
+    try {
+      const readEmployee = await Staff.find({ email: emailId })
+      if (!readEmployee) {
+        throw new ApiErrorHandler(errMessage.get, 404);
+      }
+      return readEmployee;
+    } catch (error) {
+      console.error(error, "staffRepo.readEmployeeByEmail");
+      throw new ApiErrorHandler(error.message, 500);
+    }
+  },
+
   updateEmployee: async (id, body) => {
     try {
       const updateEmployee = await Staff.findByIdAndUpdate(id, body);

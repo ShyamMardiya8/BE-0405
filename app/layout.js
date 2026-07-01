@@ -1,6 +1,7 @@
 import { Provider } from "react-redux";
 import store from "./redux/Store/Store";
 import StoreProvider from "./StoreProvider";
+import "./globals.css";
 
 export const metadata = {
   title: "Alpha API Developer Portal",

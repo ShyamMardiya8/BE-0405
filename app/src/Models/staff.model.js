@@ -1,18 +1,36 @@
 import mongoose from "mongoose";
 
 const staffSchema = new mongoose.Schema({
-  name: {
+  companyId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Company",
+    default: null,
+  },
+  photo: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  firstname: {
     type: String,
     required: true,
     trim: true,
+  },
+  lastname: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  mobileNumber: {
+    type: Number,
+    required: true,
+  },
+  additionalNumber: {
+    type: Number,
+    required: true,
   },
   email: {
     type: String,
-    required: true,
-    trim: true,
-  },
-  phoneNumber: {
-    type: Number,
     required: true,
     trim: true,
   },
@@ -25,6 +43,21 @@ const staffSchema = new mongoose.Schema({
     type: String,
     required: true,
     trim: true,
+  },
+  reportingHead: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Staff",
+    default: null,
+  }, 
+  locationTracking: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  active: {
+    type: Boolean,
+    required: true,
+    default: true,
   },
   tasks: [
     {
